@@ -4,8 +4,8 @@
       <img
         src="/bandera-apl.webp"
         alt="Bandera del Sindicato Nacional APL: Unidos somos más fuertes. Trabajadoras y trabajadores siempre juntos."
-        width="1000"
-        height="600"
+        width="1200"
+        height="804"
         loading="lazy"
       />
     </div>

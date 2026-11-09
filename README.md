@@ -32,7 +32,7 @@ La web queda en `http://localhost:8080`. Sin `.env` la portada igual carga con d
 ## Estructura
 
 ```
-public/                 logo-apl.png, bandera-apl.png, index.html
+public/                 logo-apl.webp, bandera-apl.webp, index.html
 src/
   assets/styles/        global.css, responsive.css, dashboard.css
   components/           layout, home, news, events, dashboard, ui
@@ -53,8 +53,8 @@ Toda imagen que se suba desde el dashboard pasa por `src/utils/optimizeImage.js`
 
 ## Archivos que deben estar en `public/`
 
-- `logo-apl.png` (logo circular)
-- `bandera-apl.png` (bandera / banner)
+- `logo-apl.webp` (logo circular)
+- `bandera-apl.webp` (bandera / banner)
 
 ## Trabajo en equipo
 
