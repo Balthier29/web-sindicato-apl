@@ -14,7 +14,7 @@
       </div>
       <img
         class="hero__logo"
-        src="/logo-apl.png"
+        src="/logo-apl.webp"
         alt="Logo del Sindicato Nacional APL: Unidos somos más fuertes"
         width="280"
         height="280"

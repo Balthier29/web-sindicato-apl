@@ -20,7 +20,7 @@ const cerrar = () => (menuAbierto.value = false)
   <header class="header">
     <div class="contenedor header__barra">
       <router-link to="/" class="header__marca" @click="cerrar">
-        <img src="/logo-apl.png" alt="" width="34" height="34" />
+        <img src="/logo-apl.webp" alt="" width="34" height="34" />
         <span>Sindicato Nacional APL</span>
       </router-link>
 
