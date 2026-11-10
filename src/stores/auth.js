@@ -4,30 +4,60 @@ import { supabase } from '@/services/supabase'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
+  const isAdmin = ref(false)
   const ready = ref(false)
 
+  // Una cuenta es administradora solo si está en la tabla "admins"
+  async function comprobarAdmin() {
+    if (!supabase || !user.value) {
+      isAdmin.value = false
+      return
+    }
+    const { data } = await supabase
+      .from('admins')
+      .select('user_id')
+      .eq('user_id', user.value.id)
+      .maybeSingle()
+    isAdmin.value = !!data
+  }
+
   async function init() {
-    if (ready.value || !supabase) {
+    if (ready.value) return
+    if (!supabase) {
       ready.value = true
       return
     }
     const { data } = await supabase.auth.getSession()
     user.value = data.session?.user ?? null
-    supabase.auth.onAuthStateChange((_event, session) => {
-      user.value = session?.user ?? null
+    await comprobarAdmin()
+
+    supabase.auth.onAuthStateChange((_evento, sesion) => {
+      user.value = sesion?.user ?? null
+      // Se difiere para no llamar a Supabase dentro del propio callback
+      setTimeout(comprobarAdmin, 0)
     })
     ready.value = true
   }
 
   async function login(email, password) {
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) throw error
+    if (!supabase) throw new Error('Supabase no está configurado. Completa el archivo .env.')
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) throw new Error('Correo o contraseña incorrectos.')
+
+    user.value = data.user
+    await comprobarAdmin()
+    if (!isAdmin.value) {
+      await logout()
+      throw new Error('Esta cuenta no tiene permisos de administrador.')
+    }
   }
 
   async function logout() {
-    await supabase.auth.signOut()
+    if (supabase) await supabase.auth.signOut()
     user.value = null
+    isAdmin.value = false
   }
 
-  return { user, ready, init, login, logout }
+  return { user, isAdmin, ready, init, login, logout }
 })

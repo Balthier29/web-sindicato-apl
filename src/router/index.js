@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import PublicLayout from '@/layouts/PublicLayout.vue'
-import { requireAuth } from './guards'
+import { requireAdmin } from './guards'
 
 const routes = [
   {
@@ -17,13 +17,24 @@ const routes = [
       { path: 'inscripcion', name: 'inscripcion', component: () => import('@/views/public/InscriptionView.vue'), meta: { title: 'Inscripción' } }
     ]
   },
-  // El dashboard se construye en la siguiente etapa; la ruta queda reservada y protegida
+  // Dashboard de administración (solo cuentas listadas en la tabla "admins")
+  {
+    path: '/dashboard/login',
+    name: 'dashboard-login',
+    component: () => import('@/views/dashboard/LoginView.vue'),
+    meta: { title: 'Ingreso al panel' }
+  },
   {
     path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('@/views/dashboard/DashHomeView.vue'),
-    beforeEnter: requireAuth,
-    meta: { title: 'Panel' }
+    component: () => import('@/layouts/DashboardLayout.vue'),
+    beforeEnter: requireAdmin,
+    children: [
+      { path: '', name: 'dashboard', component: () => import('@/views/dashboard/DashHomeView.vue'), meta: { title: 'Panel' } },
+      { path: 'noticias', name: 'dash-noticias', component: () => import('@/views/dashboard/DashNewsView.vue'), meta: { title: 'Panel · Noticias' } },
+      { path: 'eventos', name: 'dash-eventos', component: () => import('@/views/dashboard/DashEventsView.vue'), meta: { title: 'Panel · Eventos' } },
+      { path: 'documentos', name: 'dash-documentos', component: () => import('@/views/dashboard/DashDocumentsView.vue'), meta: { title: 'Panel · Documentos' } },
+      { path: 'estadisticas', name: 'dash-estadisticas', component: () => import('@/views/dashboard/DashStatsView.vue'), meta: { title: 'Panel · Estadísticas' } }
+    ]
   },
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ]

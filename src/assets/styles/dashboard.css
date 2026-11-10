@@ -1,5 +1,6 @@
 /* ==========================================================
    dashboard.css — Estilos exclusivos del panel de administración
+   Prefijo .dash__ para no chocar con la web pública.
    ========================================================== */
 
 .dash {
@@ -8,23 +9,120 @@
   background: var(--gris-100);
 }
 
+/* ---------- Barra lateral (arriba en móvil) ---------- */
 .dash__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2);
   background: var(--azul-oscuro);
   color: var(--blanco);
-  padding: var(--espacio-2);
 }
 
+.dash__marca {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+}
+
+.dash__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.dash__nav a {
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radio);
+  font-size: 0.9rem;
+}
+
+.dash__nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dash__nav a.is-active {
+  background: var(--celeste);
+  color: var(--azul-oscuro);
+  font-weight: 600;
+}
+
+.dash__pie {
+  display: flex;
+  gap: var(--espacio-2);
+  font-size: 0.85rem;
+}
+
+.dash__enlace {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: underline;
+}
+
+.dash__enlace:hover {
+  color: var(--amarillo);
+}
+
+/* ---------- Contenido ---------- */
 .dash__main {
+  min-width: 0;
   padding: var(--espacio-3) var(--espacio-2);
 }
 
+.dash__encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+  margin-bottom: var(--espacio-2);
+}
+
+.dash__encabezado h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
 .dash__card {
+  padding: var(--espacio-3);
   background: var(--blanco);
   border-radius: var(--radio);
   box-shadow: var(--sombra);
-  padding: var(--espacio-3);
 }
 
+.dash__card h2 {
+  font-size: 1.15rem;
+}
+
+.dash__nota {
+  font-size: 0.85rem;
+  color: var(--gris-600);
+}
+
+/* ---------- Mensajes ---------- */
+.dash__error,
+.dash__aviso {
+  margin: 0 0 var(--espacio-2);
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radio);
+  font-size: 0.9rem;
+}
+
+.dash__error {
+  background: #fde8e8;
+  color: #9b1c1c;
+}
+
+.dash__aviso {
+  background: #e3f6e8;
+  color: #1c6b34;
+}
+
+/* ---------- Formularios ---------- */
 .dash__campo {
   display: grid;
   gap: 0.35rem;
@@ -32,22 +130,166 @@
 }
 
 .dash__campo label {
-  font-weight: 600;
   font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.dash__campo input,
+.dash__campo input:not([type='file']),
 .dash__campo textarea,
 .dash__campo select {
+  width: 100%;
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--gris-300);
   border-radius: var(--radio);
   background: var(--blanco);
 }
 
-@media (min-width: 768px) {
+.dash__campo textarea {
+  resize: vertical;
+}
+
+.dash__fila {
+  display: grid;
+  gap: var(--espacio-2);
+}
+
+.dash__check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--espacio-2);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.dash__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1);
+  margin-top: var(--espacio-2);
+}
+
+/* ---------- Listados ---------- */
+.dash__lista {
+  display: grid;
+  gap: 0;
+}
+
+.dash__lista li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2) 0;
+  border-bottom: 1px solid var(--gris-100);
+}
+
+.dash__lista li:last-child {
+  border-bottom: 0;
+}
+
+.dash__lista img {
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.dash__lista-texto {
+  display: grid;
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.dash__lista-texto small {
+  color: var(--gris-600);
+}
+
+.dash__estado {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--gris-100);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gris-600);
+}
+
+.dash__estado.is-ok {
+  background: #e3f6e8;
+  color: #1c6b34;
+}
+
+.dash__fila-acciones {
+  display: flex;
+  gap: var(--espacio-1);
+}
+
+.dash__enlace-borde,
+.dash__enlace-peligro {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--gris-300);
+  border-radius: 999px;
+  background: var(--blanco);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.dash__enlace-peligro {
+  border-color: #f0b4b4;
+  color: #9b1c1c;
+}
+
+/* ---------- Resumen ---------- */
+.dash__accesos {
+  display: grid;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
+.dash__acceso {
+  transition: transform 0.15s ease;
+}
+
+.dash__acceso:hover {
+  transform: translateY(-3px);
+}
+
+.dash__acceso p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--gris-600);
+}
+
+/* ---------- Pantallas más grandes ---------- */
+@media (min-width: 600px) {
+  .dash__fila {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .dash__accesos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
   .dash {
     grid-template-columns: 240px 1fr;
+  }
+
+  .dash__sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .dash__nav {
+    flex-direction: column;
+  }
+
+  .dash__pie {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto;
+    align-items: flex-start;
   }
 
   .dash__main {

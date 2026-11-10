@@ -1,16 +1,23 @@
 <script setup>
-// Valores de ejemplo: luego se cargarán desde el dashboard (tabla "stats")
-const stats = [
-  { valor: '2003', etiqueta: 'Año de fundación' },
-  { valor: '00', etiqueta: 'Socios y socias' },
-  { valor: '00', etiqueta: 'Convenios vigentes' }
-]
+import { ref, onMounted } from 'vue'
+import { getStats, STATS_EJEMPLO } from '@/services/statsService'
+
+// Arranca con valores de ejemplo y se reemplaza con los del dashboard (tabla "stats")
+const stats = ref(STATS_EJEMPLO)
+
+onMounted(async () => {
+  try {
+    stats.value = await getStats()
+  } catch {
+    // Si falla la carga se mantienen los valores de ejemplo
+  }
+})
 </script>
 
 <template>
   <section class="stats">
     <div class="contenedor stats__grid">
-      <div v-for="s in stats" :key="s.etiqueta" class="stat">
+      <div v-for="s in stats" :key="s.clave" class="stat">
         <strong>{{ s.valor }}</strong>
         <span>{{ s.etiqueta }}</span>
       </div>
