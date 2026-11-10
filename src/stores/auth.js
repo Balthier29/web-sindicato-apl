@@ -21,22 +21,24 @@ export const useAuthStore = defineStore('auth', () => {
     isAdmin.value = !!data
   }
 
-  async function init() {
-    if (ready.value) return
-    if (!supabase) {
-      ready.value = true
-      return
-    }
-    const { data } = await supabase.auth.getSession()
-    user.value = data.session?.user ?? null
-    await comprobarAdmin()
+  // Se llama desde App.vue y desde el guard; solo se ejecuta una vez
+  let iniciando = null
+  function init() {
+    iniciando ??= (async () => {
+      if (supabase) {
+        const { data } = await supabase.auth.getSession()
+        user.value = data.session?.user ?? null
+        await comprobarAdmin()
 
-    supabase.auth.onAuthStateChange((_evento, sesion) => {
-      user.value = sesion?.user ?? null
-      // Se difiere para no llamar a Supabase dentro del propio callback
-      setTimeout(comprobarAdmin, 0)
-    })
-    ready.value = true
+        supabase.auth.onAuthStateChange((_evento, sesion) => {
+          user.value = sesion?.user ?? null
+          // Se difiere para no llamar a Supabase dentro del propio callback
+          setTimeout(comprobarAdmin, 0)
+        })
+      }
+      ready.value = true
+    })()
+    return iniciando
   }
 
   async function login(email, password) {

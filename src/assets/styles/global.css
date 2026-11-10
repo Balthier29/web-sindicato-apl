@@ -129,6 +129,17 @@ button {
   border-bottom: 2px solid var(--celeste-claro);
 }
 
+/* Encabezado de las páginas internas (Noticias, Eventos, Documentos...) */
+.titulo-pagina {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: var(--espacio-1);
+}
+
+.bajada {
+  margin-bottom: var(--espacio-4);
+  color: var(--gris-600);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

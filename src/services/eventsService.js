@@ -5,7 +5,8 @@ const EJEMPLO = [1, 2, 3].map((i) => ({
   titulo: 'Nombre del evento',
   lugar: 'Lugar',
   hora: 'Hora',
-  fecha: '2026-11-20'
+  fecha: '2026-11-20',
+  descripcion: ''
 }))
 
 export async function getEvents({ limite = 10 } = {}) {
@@ -14,7 +15,7 @@ export async function getEvents({ limite = 10 } = {}) {
   const hoy = new Date().toISOString().slice(0, 10)
   const { data, error } = await supabase
     .from('events')
-    .select('id, titulo, lugar, hora, fecha')
+    .select('id, titulo, lugar, hora, fecha, descripcion')
     .gte('fecha', hoy)
     .order('fecha', { ascending: true })
     .limit(limite)

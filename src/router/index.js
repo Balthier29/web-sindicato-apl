@@ -10,6 +10,7 @@ const routes = [
       { path: '', name: 'inicio', component: () => import('@/views/public/HomeView.vue'), meta: { title: 'Inicio' } },
       { path: 'quienes-somos', name: 'quienes-somos', component: () => import('@/views/public/AboutView.vue'), meta: { title: 'Quiénes somos' } },
       { path: 'noticias', name: 'noticias', component: () => import('@/views/public/NewsView.vue'), meta: { title: 'Noticias' } },
+      { path: 'noticias/:id', name: 'noticia', component: () => import('@/views/public/NewsDetailView.vue'), meta: { title: 'Noticia' } },
       { path: 'eventos', name: 'eventos', component: () => import('@/views/public/EventsView.vue'), meta: { title: 'Eventos' } },
       { path: 'documentos', name: 'documentos', component: () => import('@/views/public/DocumentsView.vue'), meta: { title: 'Documentos' } },
       { path: 'beneficios', name: 'beneficios', component: () => import('@/views/public/BenefitsView.vue'), meta: { title: 'Beneficios' } },

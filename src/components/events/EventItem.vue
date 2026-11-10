@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  evento: { type: Object, required: true }
+  evento: { type: Object, required: true },
+  detalle: { type: Boolean, default: false } // muestra la descripción (página de Eventos)
 })
 
 const fecha = computed(() => new Date(props.evento.fecha + 'T00:00:00'))
@@ -21,6 +22,7 @@ const mes = computed(() =>
     <div>
       <h3>{{ evento.titulo }}</h3>
       <p>{{ evento.lugar }} · {{ evento.hora }}</p>
+      <p v-if="detalle && evento.descripcion" class="evento__desc">{{ evento.descripcion }}</p>
     </div>
   </article>
 </template>
@@ -63,5 +65,11 @@ const mes = computed(() =>
   margin: 0;
   font-size: 0.8rem;
   color: var(--gris-600);
+}
+
+.evento .evento__desc {
+  margin-top: 0.4rem;
+  white-space: pre-line;
+  color: var(--texto);
 }
 </style>

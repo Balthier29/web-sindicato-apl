@@ -1,10 +1,12 @@
 <script setup>
+import AdminBar from '@/components/layout/AdminBar.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 </script>
 
 <template>
   <div class="public-layout">
+    <AdminBar />
     <AppHeader />
     <main>
       <router-view />
